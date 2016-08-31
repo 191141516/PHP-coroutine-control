@@ -5,7 +5,8 @@ namespace Coroutine;
 use \SplQueue;
 use \Generator;
 
-class Scheduler {
+class Scheduler
+{
     /**
      * @var Task id.
      */
@@ -28,11 +29,13 @@ class Scheduler {
 
     protected $waitingForWrite = array();
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->taskQueue = new SplQueue();
     }
 
-    public function newTask(Generator $coroutine) {
+    public function newTask(Generator $coroutine)
+    {
         $tid = ++$this->maxTaskId;
         $task = new Task($tid, $coroutine);
         $this->taskMap[$tid] = $task;
@@ -40,11 +43,13 @@ class Scheduler {
         return $tid;
     }
 
-    public function schedule(Task $task) {
+    public function schedule(Task $task)
+    {
         $this->taskQueue->enqueue($task);
     }
 
-    public function run() {
+    public function run()
+    {
         $this->newTask($this->ioPollTask());
 
         while (!$this->taskQueue->isEmpty()) {
@@ -69,7 +74,8 @@ class Scheduler {
         }
     }
 
-    public function killTask($tid) {
+    public function killTask($tid)
+    {
         if (!isset($this->taskMap[$tid])) {
             return false;
         }
@@ -88,7 +94,8 @@ class Scheduler {
         return true;
     }
 
-    public function waitForRead($socket, Task $task) {
+    public function waitForRead($socket, Task $task)
+    {
         if (isset($this->waitingForRead[(int) $socket])) {
             $this->waitingForRead[(int) $socket][1][] = $task;
         } else {
@@ -96,7 +103,8 @@ class Scheduler {
         }
     }
 
-    public function waitForWrite($socket, Task $task) {
+    public function waitForWrite($socket, Task $task)
+    {
         if (isset($this->waitingForWrite[(int) $socket])) {
             $this->waitingForWrite[(int) $socket][1][] = $task;
         } else {
@@ -104,7 +112,8 @@ class Scheduler {
         }
     }
 
-    protected function ioPoll($timeout) {
+    protected function ioPoll($timeout)
+    {
         $rSocks = [];
         foreach ($this->waitingForRead as list($socket)) {
             $rSocks[] = $socket;
@@ -141,7 +150,8 @@ class Scheduler {
         }
     }
 
-    protected function ioPollTask() {
+    protected function ioPollTask()
+    {
         while (true) {
             if ($this->taskQueue->isEmpty()) {
                 $this->ioPoll(null);

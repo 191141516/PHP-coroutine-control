@@ -5,31 +5,37 @@ namespace Coroutine;
 use \Generator;
 use \SplStack;
 
-class Task {
+class Task
+{
     protected $taskId;
     protected $coroutine;
     protected $sendValue = null;
     protected $beforeFirstYield = true;
     protected $exception = null;
 
-    public function __construct($taskId, Generator $coroutine) {
+    public function __construct($taskId, Generator $coroutine)
+    {
         $this->taskId = $taskId;
         $this->coroutine = $this->StackedCoroutine($coroutine);
     }
 
-    public function getTaskId() {
+    public function getTaskId()
+    {
         return $this->taskId;
     }
 
-    public function setSendValue($sendValue) {
+    public function setSendValue($sendValue)
+    {
         $this->sendValue = $sendValue;
     }
 
-    public function setException($exception) {
+    public function setException($exception)
+    {
         $this->exception = $exception;
     }
 
-    public function stackedCoroutine(Generator $gen) {
+    public function stackedCoroutine(Generator $gen)
+    {
         $stack = new SplStack;
         $exception = null;
 
@@ -79,7 +85,8 @@ class Task {
         }
     }
 
-    public function run() {
+    public function run()
+    {
         if ($this->beforeFirstYield) {
             $this->beforeFirstYield = false;
             return $this->coroutine->current();
@@ -94,7 +101,8 @@ class Task {
         }
     }
 
-    public function isFinished() {
+    public function isFinished()
+    {
         return !$this->coroutine->valid();
     }
 }

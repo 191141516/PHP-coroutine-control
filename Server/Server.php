@@ -2,12 +2,6 @@
 
 namespace Server;
 
-use Coroutine\Scheduler;
-use Coroutine\Task;
-use Coroutine\CoroutineReturnValue;
-use Coroutine\SystemCall;
-
-
 class Server
 {
     protected $port;
@@ -17,7 +11,8 @@ class Server
         $this->port = $port;
     }
 
-    public function start() {
+    public function start()
+    {
         $port = $this->port;
         echo "Starting server at port $port...\n";
 
@@ -26,7 +21,7 @@ class Server
 
         stream_set_blocking($socket, 0);
 
-        $socket = new CoSocket($socket);
+        $socket = new Socket($socket);
         while (true) {
             yield newTask(
                 $this->handleClient(yield $socket->accept())
@@ -34,7 +29,8 @@ class Server
         }
     }
 
-    protected function handleClient($socket) {
+    protected function handleClient($socket)
+    {
         $data = (yield $socket->read(8192));
 
         $msg = "Received following request:\n\n$data";
@@ -54,14 +50,5 @@ RES;
     }
 
 }
-
-
-
-
-
-
-
-
-
 
 // end of script
