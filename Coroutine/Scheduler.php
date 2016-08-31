@@ -9,32 +9,45 @@ use \Exception;
 class Scheduler
 {
     /**
-     * @var Task id.
+     * @var int Task id.
      */
     protected $maxTaskId = 0;
 
     /**
-     * @var [TaskId => Task]
+     * @var array [TaskId => Task] 任务映射 map.
      */
     protected $taskMap = [];
 
     /**
-     * @var Task queue.
+     * @var SplQueue Task queue.
      */
     protected $taskQueue;
 
     /**
-     * @var resourceID => [socket, tasks]
+     * @var array IO queue that waiting to read [resourceID => [socket, tasks]].
      */
     protected $waitingForRead = array();
 
+    /**
+     * @var array IO queue that waiting to write.
+     */
     protected $waitingForWrite = array();
 
+
+    /**
+     * Init task queue.
+     */
     public function __construct()
     {
         $this->taskQueue = new SplQueue();
     }
 
+    /**
+     * New task.
+     *
+     * @param Generator $coroutine 生成器函数.
+     * @return int $tid Task id.
+     */
     public function newTask(Generator $coroutine)
     {
         $tid = ++$this->maxTaskId;
@@ -44,11 +57,20 @@ class Scheduler
         return $tid;
     }
 
+    /**
+     * Schedule the task into the tasksQueue.
+     *
+     * @param Task $task
+     */
     public function schedule(Task $task)
     {
         $this->taskQueue->enqueue($task);
     }
 
+    /**
+     * Run the tasks that from the SplQueue.
+     *
+     */
     public function run()
     {
         $this->newTask($this->ioPollTask());
@@ -95,6 +117,12 @@ class Scheduler
         return true;
     }
 
+    /**
+     * IO queue that waiting to read.
+     *
+     *
+     *
+     */
     public function waitForRead($socket, Task $task)
     {
         if (isset($this->waitingForRead[(int) $socket])) {
