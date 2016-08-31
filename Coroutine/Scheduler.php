@@ -119,9 +119,10 @@ class Scheduler
 
     /**
      * IO queue that waiting to read.
+     * It can be used by SystemCall.
      *
-     *
-     *
+     * @param Resource $socket IO stream.
+     * @param Task     $task   The task that from the resource.
      */
     public function waitForRead($socket, Task $task)
     {
@@ -132,6 +133,13 @@ class Scheduler
         }
     }
 
+    /**
+     * IO queue that waiting to write.
+     * It can be used by SystemCall.
+     *
+     * @param Resource $socket IO stream.
+     * @param Task     $task   The task that from the resource.
+     */
     public function waitForWrite($socket, Task $task)
     {
         if (isset($this->waitingForWrite[(int) $socket])) {
@@ -141,6 +149,12 @@ class Scheduler
         }
     }
 
+    /**
+     *
+     *
+     * @param [int|null] $timeout 0 for not wait, and null for block until an event on the watched streams occurs.
+     *
+     */
     protected function ioPoll($timeout)
     {
         $rSocks = [];
