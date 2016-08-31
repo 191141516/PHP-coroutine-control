@@ -1,16 +1,13 @@
 <?php
 
 use Coroutine\Scheduler;
-use Coroutine\Task;
-use Coroutine\CoroutineReturnValue;
-
 use Server\Server;
 
 
 
 
 
-
+require './bin/system.php';
 require './AutoLoader.php';
 
 $server = new Server(8000);

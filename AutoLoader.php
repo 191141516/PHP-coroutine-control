@@ -1,55 +1,32 @@
 <?php
 
 class AutoLoader {
-    public static function AutoLoadCoroutine($class) {
-        $namespace = 'Coroutine';
-        $prefix = $namespace . '\\';
-
-        $len = strlen($prefix);
-        if (strncmp($prefix, $class, $len) !== 0) {
-            // Another namespace.
-            return;
-        }
-
-        $class_name = substr($class, $len);
-
-        $file = rtrim(__DIR__, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . strtr($class_name, '\\', DIRECTORY_SEPARATOR) . '.php';
-
-        if (is_file($file)) {
-            require $file;
-        }
-    }
-
-    public static function AutoLoadServer($class) {
-        $namespace = 'Server';
-        $prefix = $namespace . '\\';
-
-        $len = strlen($prefix);
-        if (strncmp($prefix, $class, $len) !== 0) {
-            // Another namespace.
-            return;
-        }
-
-        $class_name = substr($class, $len);
-
-        $file = rtrim(__DIR__, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . strtr($class_name, '\\', DIRECTORY_SEPARATOR) . '.php';
-
-        if (is_file($file)) {
-            require $file;
-        }
-    }
-
     public static function load($class) {
-        $classPath = __dir__ . DIRECTORY_SEPARATOR . $class . '.php';
+        foreach (NAMESPACE_LIST as $key => $value) {
+            $namespace = $value;
+            $prefix = $namespace . '\\';
 
-        if (is_file($classPath)) {
-            require $classPath;
+            $len = strlen($prefix);
+            if (strncmp($prefix, $class, $len) !== 0) {
+                // Another namespace.
+                continue;
+            }
+
+            $class_name = substr($class, $len);
+
+            $file = rtrim(__DIR__, DS) . LIB_BASE_DIR . $namespace . DS . strtr($class_name, '\\', DS) . '.php';
+
+            if (is_file($file)) {
+                require $file;
+            }
         }
     }
 }
 
-spl_autoload_register(array('AutoLoader', 'AutoLoadCoroutine'));
-spl_autoload_register(array('AutoLoader', 'AutoLoadServer'));
+define('DS', DIRECTORY_SEPARATOR);
+define('LIB_BASE_DIR', DS);
+define('NAMESPACE_LIST', array('Coroutine', 'Server'));
+
 spl_autoload_register(array('AutoLoader', 'load'));
 
 // end of script
