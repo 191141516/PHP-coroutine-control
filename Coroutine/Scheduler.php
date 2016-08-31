@@ -4,6 +4,7 @@ namespace Coroutine;
 
 use \SplQueue;
 use \Generator;
+use \Exception;
 
 class Scheduler
 {
@@ -161,9 +162,6 @@ class Scheduler
             yield;
         }
     }
-
-
-
 
 }
 
