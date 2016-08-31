@@ -2,10 +2,20 @@
 
 class AutoLoader {
     public static function load($class) {
-        $classPath = __dir__ . DIRECTORY_SEPARATOR . $class . '.php';
+        $prefix = 'Tsa\\';
 
-        if (is_file($classPath)) {
-            require $classPath;
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            // Another namespace.
+            return;
+        }
+
+        $class_name = substr($class, $len);
+
+        $file = rtrim(__DIR__, DS) . DS . strtr($class_name, '\\', DS) . '.php';
+
+        if (is_file($file)) {
+            require $file;
         }
     }
 }
