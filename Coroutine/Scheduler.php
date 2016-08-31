@@ -1,5 +1,7 @@
 <?php
 
+namespace Coroutine;
+
 class Scheduler {
     /**
      * @var Task id.

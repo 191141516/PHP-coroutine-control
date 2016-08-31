@@ -1,5 +1,7 @@
 <?php
 
+namespace Coroutine;
+
 class Task {
     protected $taskId;
     protected $coroutine;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Coroutine;
+
 class CoroutineReturnValue {
     protected $value;
 

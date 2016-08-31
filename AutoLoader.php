@@ -2,7 +2,8 @@
 
 class AutoLoader {
     public static function AutoLoadCoroutine($class) {
-        $prefix = 'Coroutine\\';
+        $namespace = 'Coroutine';
+        $prefix = $namespace . '\\';
 
         $len = strlen($prefix);
         if (strncmp($prefix, $class, $len) !== 0) {
@@ -12,15 +13,16 @@ class AutoLoader {
 
         $class_name = substr($class, $len);
 
-        $file = rtrim(__DIR__, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . strtr($class_name, '\\', DIRECTORY_SEPARATOR) . '.php';
-
+        $file = rtrim(__DIR__, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . strtr($class_name, '\\', DIRECTORY_SEPARATOR) . '.php';
+var_dump($file);
         if (is_file($file)) {
             require $file;
         }
     }
 
     public static function AutoLoadService($class) {
-        $prefix = 'Service\\';
+        $namespace = 'Service';
+        $prefix = $namespace . '\\';
 
         $len = strlen($prefix);
         if (strncmp($prefix, $class, $len) !== 0) {
@@ -30,7 +32,7 @@ class AutoLoader {
 
         $class_name = substr($class, $len);
 
-        $file = rtrim(__DIR__, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . strtr($class_name, '\\', DIRECTORY_SEPARATOR) . '.php';
+        $file = rtrim(__DIR__, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . strtr($class_name, '\\', DIRECTORY_SEPARATOR) . '.php';
 
         if (is_file($file)) {
             require $file;

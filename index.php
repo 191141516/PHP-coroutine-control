@@ -1,5 +1,8 @@
 <?php
 
+use Coroutine;
+use Coroutine\Scheduler;
+
 // system call
 function getTaskId() {
     return new SystemCall(
