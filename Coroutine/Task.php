@@ -3,6 +3,7 @@
 namespace Coroutine;
 
 use \Generator;
+use \SplStack;
 
 class Task {
     protected $taskId;
@@ -13,7 +14,7 @@ class Task {
 
     public function __construct($taskId, Generator $coroutine) {
         $this->taskId = $taskId;
-        $this->coroutine = StackedCoroutine($coroutine);
+        $this->coroutine = $this->StackedCoroutine($coroutine);
     }
 
     public function getTaskId() {
@@ -26,6 +27,56 @@ class Task {
 
     public function setException($exception) {
         $this->exception = $exception;
+    }
+
+    public function stackedCoroutine(Generator $gen) {
+        $stack = new SplStack;
+        $exception = null;
+
+        while (true) {
+            try {
+                if ($exception) {
+                    $gen->throw($exception);
+                    $exception = null;
+                    continue;
+                }
+
+                $value = $gen->current();
+
+                if ($value instanceof Generator) {
+                    $stack->push($gen);
+                    $gen = $value;
+                    continue;
+                }
+
+                $isReturnValue = $value instanceof CoroutineReturnValue;
+                if (!$gen->valid() || $isReturnValue) {
+                    if ($stack->isEmpty()) {
+                        return;
+                    }
+
+                    $gen = $stack->pop();
+                    $gen->send($isReturnValue ? $value->getValue() : NULL);
+                    continue;
+                }
+
+                try {
+                    $sendValue = (yield $gen->key() => $value);
+                } catch (Exception $e) {
+                    $gen->throw($e);
+                    continue;
+                }
+
+                $gen->send($sendValue);
+            } catch (Exception $e) {
+                if ($stack->isEmpty()) {
+                    throw $e;
+                }
+
+                $gen = $stack->pop();
+                $exception = $e;
+            }
+        }
     }
 
     public function run() {

@@ -4,8 +4,8 @@ use Coroutine\Scheduler;
 use Coroutine\Task;
 use Coroutine\CoroutineReturnValue;
 use Coroutine\SystemCall;
+use Server\Server;
 
-use \Generator;
 //use \SplStack;
 
 
@@ -61,65 +61,13 @@ function retval($value) {
     return new CoroutineReturnValue($value);
 }
 
-function stackedCoroutine(Generator $gen) {
-    $stack = new SplStack;
-    $exception = null;
-
-    while (true) {
-        try {
-            if ($exception) {
-                $gen->throw($exception);
-                $exception = null;
-                continue;
-            }
-
-            $value = $gen->current();
-
-            if ($value instanceof Generator) {
-                $stack->push($gen);
-                $gen = $value;
-                continue;
-            }
-
-            $isReturnValue = $value instanceof CoroutineReturnValue;
-            if (!$gen->valid() || $isReturnValue) {
-                if ($stack->isEmpty()) {
-                    return;
-                }
-
-                $gen = $stack->pop();
-                $gen->send($isReturnValue ? $value->getValue() : NULL);
-                continue;
-            }
-
-            try {
-                $sendValue = (yield $gen->key() => $value);
-            } catch (Exception $e) {
-                $gen->throw($e);
-                continue;
-            }
-
-            $gen->send($sendValue);
-        } catch (Exception $e) {
-            if ($stack->isEmpty()) {
-                throw $e;
-            }
-
-            $gen = $stack->pop();
-            $exception = $e;
-        }
-    }
-}
-
-
-
-
 
 
 
 require './AutoLoader.php';
 
+$server = new Server(8000);
 
 $scheduler = new Scheduler;
-$scheduler->newTask(server(8000));
+$scheduler->newTask($server->start());
 $scheduler->run();
