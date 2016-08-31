@@ -9,6 +9,7 @@ class CoSocket {
 
     public function accept() {
         echo "received request from ", stream_socket_get_name($this->socket, 0), "\n";
+
         yield waitForRead($this->socket);
         yield retval(new CoSocket(stream_socket_accept($this->socket, 0)));
     }

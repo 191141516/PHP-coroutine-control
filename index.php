@@ -56,7 +56,7 @@ function stackedCoroutine(Generator $gen) {
     $stack = new SplStack;
     $exception = null;
 
-    for (;;) {
+    while (true) {
         try {
             if ($exception) {
                 $gen->throw($exception);
