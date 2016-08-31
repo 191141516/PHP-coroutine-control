@@ -2,6 +2,9 @@
 
 namespace Coroutine;
 
+use \SplQueue;
+use \Generator;
+
 class Scheduler {
     /**
      * @var Task id.
