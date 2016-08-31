@@ -23,6 +23,10 @@ class AutoLoader {
     }
 }
 
+if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+    throw new Exception('The Tsa SDK requires PHP version 5.4 or higher.');
+}
+
 define('DS', DIRECTORY_SEPARATOR);
 define('LIB_BASE_DIR', DS);
 define('NAMESPACE_LIST', array('Coroutine', 'Server'));
