@@ -150,6 +150,8 @@ class Scheduler
     }
 
     /**
+     * IO poll
+     * Get the tasks form the IO waiting/writing queue
      *
      *
      * @param [int|null] $timeout 0 for not wait, and null for block until an event on the watched streams occurs.
