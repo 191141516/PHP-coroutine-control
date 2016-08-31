@@ -120,7 +120,7 @@ function server($port) {
 }
 
 function handleClient($socket) {
-    $data = (yield $socket->read(8192));
+    $data = (yield $socket->read(8000));
 
     $msg = "Received following request:\n\n$data";
     $msgLength = strlen($msg);
