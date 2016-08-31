@@ -126,11 +126,11 @@ function handleClient($socket) {
     $msgLength = strlen($msg);
 
     $response = <<<RES
-HTTP/1.1 200 OK\r
-Content-Type: text/plain\r
-Content-Length: $msgLength\r
-Connection: close\r
-\r
+HTTP/1.1 200 OK\r\n
+Content-Type: text/plain\r\n
+Content-Length: $msgLength\r\n
+Connection: close\r\n
+\r\n
 $msg
 RES;
 
