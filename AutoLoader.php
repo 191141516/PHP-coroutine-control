@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoloader.
+ *
+ * @category PHP
+ * @author   Arno [<arnoliu@tencent.com> | <1048434786@qq.com>]
+ */
 
 class AutoLoader {
     public static function load($class) {
