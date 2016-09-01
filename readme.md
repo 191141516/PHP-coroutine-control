@@ -18,7 +18,7 @@ PHP 协程调用 service 框架
 
 查看帮助：
 
-> php server.php
+```php server.php```
 
 启动服务：
 
