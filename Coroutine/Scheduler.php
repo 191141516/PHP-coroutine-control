@@ -6,6 +6,14 @@ use \SplQueue;
 use \Generator;
 use \Exception;
 
+/**
+ * Class Scheduler.
+ * Coroutine tasks' scheduler.
+ *
+ * @category PHP
+ * @package  Coroutine
+ * @author   Arno [<arnoliu@tencent.com> | <1048434786@qq.com>]
+ */
 class Scheduler
 {
     /**
@@ -29,7 +37,7 @@ class Scheduler
     protected $waitingForRead = array();
 
     /**
-     * @var array IO queue that waiting to write.
+     * @var array IO queue that waiting to write [resourceID => [socket, tasks]].
      */
     protected $waitingForWrite = array();
 
@@ -69,7 +77,6 @@ class Scheduler
 
     /**
      * Run the tasks that from the SplQueue.
-     *
      */
     public function run()
     {
@@ -150,12 +157,12 @@ class Scheduler
     }
 
     /**
-     * IO poll
-     * Get the tasks form the IO waiting/writing queue
+     * IO poll.
+     * Get the tasks form the IO waiting/writing queue.
+     * Add the socket tasks into the schedule.
+     * Or block indefinitely until some new streams occurs.
      *
-     *
-     * @param [int|null] $timeout 0 for not wait, and null for block until an event on the watched streams occurs.
-     *
+     * @param int|null $timeout 0 for not wait, and null for block until an event on the watched streams occurs.
      */
     protected function ioPoll($timeout)
     {
@@ -195,6 +202,11 @@ class Scheduler
         }
     }
 
+    /**
+     * Set the IO poll status.
+     * 0 for not wait.
+     * Null for block until an event on the watched streams occurs.
+     */
     protected function ioPollTask()
     {
         while (true) {
@@ -206,7 +218,6 @@ class Scheduler
             yield;
         }
     }
-
 }
 
 // end of script
