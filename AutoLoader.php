@@ -28,7 +28,7 @@ if (version_compare(PHP_VERSION, '5.4.0', '<')) {
 }
 
 define('DS', DIRECTORY_SEPARATOR);
-define('LIB_BASE_DIR', DS);
+define('LIB_BASE_DIR', DS . 'lib' . DS);
 define('NAMESPACE_LIST', array('Coroutine', 'Server'));
 
 spl_autoload_register(array('AutoLoader', 'load'));
