@@ -12,6 +12,9 @@ namespace Server;
  */
 class Socket
 {
+    /**
+     * @var The socket Resource.
+     */
     protected $socket;
 
     public function __construct($socket)

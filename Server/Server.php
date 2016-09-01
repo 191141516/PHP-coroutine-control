@@ -12,13 +12,26 @@ namespace Server;
  */
 class Server
 {
+    /**
+     * @var The listen port.
+     */
     protected $port;
 
+    /**
+     * Init the port.
+     *
+     * @param int $port The listen port.
+     */
     function __construct($port)
     {
         $this->port = $port;
     }
 
+    /**
+     * Start the service.
+     *
+     * @return Generator
+     */
     public function start()
     {
         $port = $this->port;
@@ -37,6 +50,12 @@ class Server
         }
     }
 
+    /**
+     * The socket client handler.
+     *
+     * @param Resource $socket The socket resource that need to handle.
+     * @return Generator
+     */
     protected function handleClient($socket)
     {
         $data = (yield $socket->read(8192));
@@ -56,7 +75,6 @@ RES;
         yield $socket->write($response);
         yield $socket->close();
     }
-
 }
 
 // end of script
