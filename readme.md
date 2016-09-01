@@ -24,13 +24,17 @@ PHP 协程调用 service 框架
 
 启动服务：
 
-> php server.php yourServerName
+```
+	php server.php yourServerName
+```
 
 `yourServerName` 是你的服务配置名，即 `conf` 目录下的 `.ini` 文件名，不用加后缀
 
 查看当前服务列表：
 
-> php server.php list
+```
+	php server.php list
+```
 
 终端服务
 
