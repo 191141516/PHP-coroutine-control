@@ -9,8 +9,8 @@
 use Coroutine\Scheduler;
 use Server\Server;
 
-require './system.functions.php';
-require '../AutoLoader.php';
+require __dir__ . DIRECTORY_SEPARATOR . 'system.functions.php';
+require dirname(__dir__) . DIRECTORY_SEPARATOR . 'AutoLoader.php';
 
 define('CONF_PATH', dirname(__dir__) . DIRECTORY_SEPARATOR . 'conf');
 
@@ -56,7 +56,7 @@ function readConf($serv)
 {
     $ini = CONF_PATH . DIRECTORY_SEPARATOR . $serv . '.ini';
     if (!is_file($ini)) {
-        echo "This server named $serv is not exist" . PHP_EOL;
+        echo "This server named '$serv' is not exist" . PHP_EOL;
         exit;
     }
 
