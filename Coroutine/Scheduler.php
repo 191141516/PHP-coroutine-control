@@ -104,6 +104,12 @@ class Scheduler
         }
     }
 
+    /**
+     * Kill the task.
+     * It can be used by SystemCall.
+     *
+     * @param int $tid The task id.
+     */
     public function killTask($tid)
     {
         if (!isset($this->taskMap[$tid])) {

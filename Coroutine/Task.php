@@ -5,25 +5,66 @@ namespace Coroutine;
 use \Generator;
 use \SplStack;
 
+/**
+ * Class Task.
+ * Coroutine task.
+ *
+ * @category PHP
+ * @package  Coroutine
+ * @author   Arno [<arnoliu@tencent.com> | <1048434786@qq.com>]
+ */
 class Task
 {
+    /**
+     * @var Task id.
+     */
     protected $taskId;
+
+    /**
+     * @var Coroutine task.
+     */
     protected $coroutine;
+
+    /**
+     * @var The send value.
+     */
     protected $sendValue = null;
+
+    /**
+     * @var Wether it is the first yield.
+     */
     protected $beforeFirstYield = true;
+
+    /**
+     * @var Error message.
+     */
     protected $exception = null;
 
+    /**
+     * Init the Task and set it into stack.
+     *
+     * @param int       $taskId    The task id.
+     * @param Generator $coroutine The coroutine task.
+     */
     public function __construct($taskId, Generator $coroutine)
     {
         $this->taskId = $taskId;
         $this->coroutine = $this->StackedCoroutine($coroutine);
     }
 
+    /**
+     * Get the task id.
+     */
     public function getTaskId()
     {
         return $this->taskId;
     }
 
+    /**
+     * Set the send value.
+     *
+     * @param mixed $sendValue The next yield value.
+     */
     public function setSendValue($sendValue)
     {
         $this->sendValue = $sendValue;
