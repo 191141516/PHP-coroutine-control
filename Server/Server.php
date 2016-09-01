@@ -60,17 +60,19 @@ class Server
     {
         $data = (yield $socket->read(8192));
 
-        $msg = "Received following request:\n\n$data";
-        $msgLength = strlen($msg);
+        $body = "Received following request:\n\n$data";
+        $bodyLength = strlen($body);
 
-        $response = <<<RES
-HTTP/1.1 200 OK\r\n
-Content-Type: text/plain\r\n
-Content-Length: $msgLength\r\n
-Connection: close\r\n
-\r\n
-$msg
-RES;
+        $response = array();
+
+        array_push($response, "HTTP/1.1 200 OK\r\n");
+        array_push($response, "Content-Type: text/plain\r\n");
+        array_push($response, "Content-Length: $bodyLength\r\n");
+        array_push($response, "Connection: close\r\n");
+        array_push($response, "\r\n");
+        array_push($response, "$body");
+
+        $response = implode($response, '');
 
         yield $socket->write($response);
         yield $socket->close();
