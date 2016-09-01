@@ -36,7 +36,7 @@ PHP 协程调用 service 框架
 	php server.php list
 ```
 
-终端服务
+中断服务
 
 > ctrl + c
 
