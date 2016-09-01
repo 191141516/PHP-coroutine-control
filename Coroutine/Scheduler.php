@@ -54,7 +54,7 @@ class Scheduler
      * New task.
      *
      * @param Generator $coroutine 生成器函数.
-     * @return int $tid Task id.
+     * @return int Task id.
      */
     public function newTask(Generator $coroutine)
     {
@@ -109,6 +109,7 @@ class Scheduler
      * It can be used by SystemCall.
      *
      * @param int $tid The task id.
+     * @return bool
      */
     public function killTask($tid)
     {
@@ -212,6 +213,8 @@ class Scheduler
      * Set the IO poll status.
      * 0 for not wait.
      * Null for block until an event on the watched streams occurs.
+     *
+     * @return Generator
      */
     protected function ioPollTask()
     {

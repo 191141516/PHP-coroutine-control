@@ -21,7 +21,7 @@ class Task
     protected $taskId;
 
     /**
-     * @var Coroutine task.
+     * @var Coroutine task stack.
      */
     protected $coroutine;
 
@@ -54,6 +54,8 @@ class Task
 
     /**
      * Get the task id.
+     *
+     * @return int Task id.
      */
     public function getTaskId()
     {
@@ -70,11 +72,22 @@ class Task
         $this->sendValue = $sendValue;
     }
 
+    /**
+     * Set the error massage.
+     *
+     * @param string $exception Error massage.
+     */
     public function setException($exception)
     {
         $this->exception = $exception;
     }
 
+    /**
+     * Set the Generator into the stack.
+     * Use the stack is to keep the Generator run environment
+     *
+     * @param Generator $gen The Generator task.
+     */
     public function stackedCoroutine(Generator $gen)
     {
         $stack = new SplStack;
@@ -126,6 +139,11 @@ class Task
         }
     }
 
+    /**
+     * Run the task.
+     *
+     * @return mixed
+     */
     public function run()
     {
         if ($this->beforeFirstYield) {
@@ -142,6 +160,11 @@ class Task
         }
     }
 
+    /**
+     * Wether the coroutine is finished.
+     *
+     * @return bool
+     */
     public function isFinished()
     {
         return !$this->coroutine->valid();
