@@ -1,4 +1,10 @@
 <?php
+/**
+ * The PHP server init.
+ *
+ * @category PHP
+ * @author   Arno [<arnoliu@tencent.com> | <1048434786@qq.com>]
+ */
 
 use Coroutine\Scheduler;
 use Server\Server;
@@ -18,15 +24,34 @@ if ($file === 'list') {
     serverList();
 }
 
-readConf($file);
+initServer(readConf($file));
 
+/**
+ * Init the server.
+ *
+ * @param array $conf The ini config info.
+ */
+function initServer($conf)
+{
+    if (count($conf) === 0) {
+        echo 'Please check your configure ini!' . PHP_EOL;
+    }
 
-// $server = new Server(8000);
+    $port = isset($conf['port']) ? $conf['port'] : 8000;
 
-// $scheduler = new Scheduler;
-// $scheduler->newTask($server->start());
-// $scheduler->run();
+    $server = new Server($port);
 
+    $scheduler = new Scheduler;
+    $scheduler->newTask($server->start());
+    $scheduler->run();
+}
+
+/**
+ * Read the ini config.
+ *
+ * @param string $serv The server name.
+ * @return array
+ */
 function readConf($serv)
 {
     $ini = CONF_PATH . DIRECTORY_SEPARATOR . $serv . '.ini';
@@ -35,7 +60,9 @@ function readConf($serv)
         exit;
     }
 
+    $conf = parse_ini_file($ini);
 
+    return $conf;
 }
 
 function serverList()
@@ -78,3 +105,5 @@ function serverInfo()
 
     exit;
 }
+
+// end of script
