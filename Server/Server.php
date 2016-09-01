@@ -2,6 +2,14 @@
 
 namespace Server;
 
+/**
+ * Class Server.
+ * The PHP inner server.
+ *
+ * @category PHP
+ * @package  Server
+ * @author   Arno [<arnoliu@tencent.com> | <1048434786@qq.com>]
+ */
 class Server
 {
     protected $port;

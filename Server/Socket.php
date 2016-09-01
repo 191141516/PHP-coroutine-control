@@ -2,6 +2,14 @@
 
 namespace Server;
 
+/**
+ * Class Socket.
+ * The socket process.
+ *
+ * @category PHP
+ * @package  Server
+ * @author   Arno [<arnoliu@tencent.com> | <1048434786@qq.com>]
+ */
 class Socket
 {
     protected $socket;
