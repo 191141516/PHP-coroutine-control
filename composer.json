@@ -1,7 +1,9 @@
 {
     "name": "coroutine/php-coroutine-control",
     "description": "The php coroutine control",
-    "keywords": ["coroutine", "server", ""],
+    "keywords": ["coroutine", "server"],
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Arno",
