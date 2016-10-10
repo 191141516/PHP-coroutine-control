@@ -13,8 +13,5 @@
     },
     "autoload": {
         "psr-4": {"Coroutine\\": "lib/Coroutine"}
-    },
-    "autoload-dev": {
-        "psr-4": {"Coroutine\\": "lib/Coroutine"}
     }
 }
