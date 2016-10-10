@@ -4,7 +4,6 @@
     "keywords": ["coroutine", "server"],
     "homepage": "https://github.com/kof97/PHP-coroutine-control.git",
     "type": "library",
-    "license": "MIT",
     "authors": [
         {
             "name": "Arno",
