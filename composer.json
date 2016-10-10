@@ -4,6 +4,7 @@
     "keywords": ["coroutine", "server"],
     "type": "library",
     "license": "MIT",
+    
     "authors": [
         {
             "name": "Arno",
@@ -11,7 +12,8 @@
         }
     ],
     "require": {
-        "php": "^5.4"
+        "php": "^5.4",
+        "psr/log": "^1.0.1"
     },
     "autoload": {
         "psr-4": {"Coroutine\\": "lib/Coroutine"}
