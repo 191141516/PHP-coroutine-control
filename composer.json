@@ -3,7 +3,6 @@
     "description": "The php coroutine control",
     "keywords": ["coroutine", "server"],
     "homepage": "https://github.com/kof97/PHP-coroutine-control.git",
-    "type": "library",
     "authors": [
         {
             "name": "Arno",
@@ -15,11 +14,9 @@
         "php": "^5.4",
     },
     "autoload": {
-        "psr-4": {"Coroutine\\": "lib/Coroutine"},
-        "psr-4": {"Server\\": "lib/Server"}
+        "psr-4": {"Coroutine\\": "lib/Coroutine"}
     },
     "autoload-dev": {
-        "psr-4": {"Coroutine\\": "lib/Coroutine"},
-        "psr-4": {"Server\\": "lib/Server"}
+        "psr-4": {"Coroutine\\": "lib/Coroutine"}
     },
 }
