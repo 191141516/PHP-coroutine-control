@@ -1,0 +1,10 @@
+{
+    "name": "coroutine/php-coroutine-control",
+    "authors": [
+        {
+            "name": "kof97",
+            "email": "1048434786@qq.com"
+        }
+    ],
+    "require": {}
+}
