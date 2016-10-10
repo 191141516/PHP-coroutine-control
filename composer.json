@@ -1,10 +1,26 @@
 {
     "name": "coroutine/php-coroutine-control",
+    "description": "The php coroutine control",
+    "keywords": ["coroutine", "server"],
+    "homepage": "https://github.com/kof97/PHP-coroutine-control.git",
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
-            "name": "kof97",
-            "email": "1048434786@qq.com"
+            "name": "Arno",
+            "email": "1048434786@qq.com",
+            "homepage": "https://github.com/kof97/PHP-coroutine-control.git"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^5.4",
+    },
+    "autoload": {
+        "psr-4": {"Coroutine\\": "lib/Coroutine"},
+        "psr-4": {"Server\\": "lib/Server"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Coroutine\\": "lib/Coroutine"},
+        "psr-4": {"Server\\": "lib/Server"}
+    },
 }
